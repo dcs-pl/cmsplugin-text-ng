@@ -6,7 +6,9 @@ from cmsplugin_text_ng import exceptions
 _registry = {}
 
 def register_type(type_name, model_class):
-    from cmsplugin_text_ng.models import TextNGVariableBase
+    from cms.utils.helpers import reversion_register
+    from cmsplugin_text_ng.models import TextNG, TextNGVariableBase
+    from reversion import unregister
     if type_name in _registry:
         if _registry[type_name] == model_class:
             # already registered
@@ -24,6 +26,13 @@ def register_type(type_name, model_class):
     if not field.null:
         raise exceptions.InvalidType('"value" field of %s is not nullable' % model_class.__name__)
     _registry[type_name] = model_class
+    fields = [rel.get_accessor_name() for rel in TextNG._meta.get_all_related_objects() if issubclass(rel.related_model, TextNGVariableBase)]
+    try:
+        unregister(TextNG)
+    except:
+        pass
+    reversion_register(TextNG, follow=fields)
+    reversion_register(model_class)
 
 
 def get_type(type_name):
