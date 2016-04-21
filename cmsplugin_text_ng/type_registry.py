@@ -8,7 +8,10 @@ _registry = {}
 def register_type(type_name, model_class):
     from cms.utils.helpers import reversion_register
     from cmsplugin_text_ng.models import TextNG, TextNGVariableBase
-    from reversion import unregister
+    try:
+        from reversion import unregister
+    except ImportError:
+        from reversion.revisions import unregister
     if type_name in _registry:
         if _registry[type_name] == model_class:
             # already registered
