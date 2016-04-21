@@ -7,6 +7,9 @@ from django.utils.translation import ugettext_lazy as _
 from cmsplugin_text_ng.compat import AbstractText
 from cmsplugin_text_ng.type_registry import register_type, get_type_list
 
+from filer.fields.image import FilerImageField, FilerFileField
+from djangocms_text_ckeditor.fields import HTMLField
+
 
 class TextNGTemplateCategory(models.Model):
     title = models.CharField(max_length=128)
@@ -73,3 +76,35 @@ class TextNGVariableText(TextNGVariableBase):
     class Meta:
         verbose_name = _('text')
         verbose_name_plural = _('texts')
+
+class TextNGVariableFilerImage(TextNGVariableBase):
+    value = FilerImageField(null=True, blank=True, verbose_name=_('value'))
+
+    class Meta:
+        verbose_name = _('image')
+        verbose_name_plural = _('images')
+
+
+class TextNGVariableFilerFile(TextNGVariableBase):
+    value = FilerFileField(null=True, blank=True, verbose_name=_('value'))
+
+    class Meta:
+        verbose_name = _('file')
+        verbose_name_plural = _('files')
+
+
+class TextNGVariableHTML(TextNGVariableBase):
+    value = HTMLField(null=True, verbose_name=_('value'))
+
+    class Meta:
+        verbose_name = _('html text')
+        verbose_name_plural = _('html texts')
+
+
+class TextNGVariableTextInput(TextNGVariableBase):
+    value = models.CharField(max_length=1000, null=True, verbose_name=_('value'))
+
+    class Meta:
+        verbose_name = _('text input')
+        verbose_name_plural = _('text input')
+
