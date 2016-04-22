@@ -8,6 +8,6 @@ class TextNGTemplateAdmin(admin.ModelAdmin):
     list_filter = ('category',)
     search_fields = ('title', 'category', 'path')
 
-admin.site.register(TextNGTemplate, TextNGTemplateAdmin)
 
+admin.site.register(TextNGTemplate, TextNGTemplateAdmin)
 admin.site.register(TextNGTemplateCategory)

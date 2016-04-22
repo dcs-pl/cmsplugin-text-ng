@@ -5,11 +5,11 @@ from django.utils.translation import ugettext_lazy as _
 from django.utils.safestring import mark_safe
 
 from cms.plugin_pool import plugin_pool
-from cmsplugin_text_ng.forms import PluginAddForm, PluginEditForm
+from djangocms_text_ckeditor.cms_plugins import TextPlugin
 
-from cmsplugin_text_ng.compat import TextPlugin
-from cmsplugin_text_ng.models import TextNG
-from cmsplugin_text_ng.utils import get_variables_from_template
+from .forms import PluginAddForm, PluginEditForm
+from .models import TextNG
+from .utils import get_variables_from_template
 
 
 class TextPluginNextGeneration(TextPlugin):

@@ -19,8 +19,10 @@ setup(
     zip_safe=False,
     include_package_data = True,
     install_requires=[
-        'Django>=1.2',
-        'django-cms>=2.0',
+        'Django>=1.8',
+        'django-cms>=3.0',
+        'djangocms-text-ckeditor',
+        'django-filer'
         ],
     classifiers = [
         "Development Status :: 3 - Alpha",

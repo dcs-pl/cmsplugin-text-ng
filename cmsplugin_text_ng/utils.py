@@ -4,8 +4,8 @@ from functools import wraps
 
 from django.template import loader, TemplateSyntaxError
 
-from cmsplugin_text_ng.templatetags.text_ng_tags import DefineNode
-from cmsplugin_text_ng.type_registry import get_type
+from .templatetags.text_ng_tags import DefineNode
+from .type_registry import get_type
 
 
 def ensure_template_arg(func):

@@ -1,14 +1,12 @@
-from distutils.version import StrictVersion
 import django
 from django.core.validators import RegexValidator
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
-from cmsplugin_text_ng.compat import AbstractText
-from cmsplugin_text_ng.type_registry import register_type, get_type_list
-
-from filer.fields.image import FilerImageField, FilerFileField
+from .type_registry import register_type, get_type_list
 from djangocms_text_ckeditor.fields import HTMLField
+from djangocms_text_ckeditor.models import AbstractText
+from filer.fields.image import FilerImageField, FilerFileField
 
 
 class TextNGTemplateCategory(models.Model):
@@ -57,7 +55,14 @@ class TextNG(AbstractText):
 class TextNGVariableBase(models.Model):
     select_related = []
     text_ng = models.ForeignKey(TextNG)
-    label = models.CharField(_('label'), max_length=20, validators=[RegexValidator(regex='[_a-z]+', message=_('Only lower case characters.'))])
+    label = models.CharField(
+        _('label'), max_length=20,
+        validators=[
+            RegexValidator(
+                regex='[_a-z]+',
+                message=_('Only lower case characters.'))
+        ]
+    )
 
     def __unicode__(self):
         return self.label
@@ -70,12 +75,10 @@ class TextNGVariableBase(models.Model):
 class TextNGVariableText(TextNGVariableBase):
     value = models.TextField(_('value'), null=True, blank=True)
 
-    def __unicode__(self):
-        return self.label + (' (%s)' % self.value if self.value else '')
-
     class Meta:
         verbose_name = _('text')
         verbose_name_plural = _('texts')
+
 
 class TextNGVariableFilerImage(TextNGVariableBase):
     value = FilerImageField(null=True, blank=True, verbose_name=_('value'))
@@ -106,5 +109,4 @@ class TextNGVariableTextInput(TextNGVariableBase):
 
     class Meta:
         verbose_name = _('text input')
-        verbose_name_plural = _('text input')
-
+        verbose_name_plural = _('text inputs')

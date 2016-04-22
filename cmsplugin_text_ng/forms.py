@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from django import forms
 
-from cmsplugin_text_ng.models import TextNG
+from .models import TextNG
 
 
 class PluginAddForm(forms.ModelForm):

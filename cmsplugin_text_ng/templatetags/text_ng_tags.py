@@ -26,6 +26,7 @@ class DefineNode(template.Node):
 
 error_message = 'Syntax: {% define variable_name as variable_type [optional] with field=value %}'
 
+
 @register.tag(name='define')
 def do_define(parser, token):
     bits = token.split_contents()[1:]
