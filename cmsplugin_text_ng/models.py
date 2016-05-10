@@ -38,6 +38,8 @@ class TextNGTemplate(models.Model):
 
 
 class TextNG(AbstractText):
+    search_fulltext = True
+
     template = models.ForeignKey(TextNGTemplate)
 
     def copy_relations(self, old_instance):
