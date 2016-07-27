@@ -1,6 +1,7 @@
 import django
 from django.core.validators import RegexValidator
 from django.db import models
+from django.utils.encoding import force_text, python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
 
 from .type_registry import register_type, get_type_list
@@ -37,10 +38,16 @@ class TextNGTemplate(models.Model):
         ordering = ['title']
 
 
+@python_2_unicode_compatible
 class TextNG(AbstractText):
     search_fulltext = True
 
     template = models.ForeignKey(TextNGTemplate)
+    name = models.CharField(
+        verbose_name=_("name"),
+        max_length=128,
+        blank=True,
+    )
 
     def copy_relations(self, old_instance):
         for model in get_type_list():
@@ -48,6 +55,9 @@ class TextNG(AbstractText):
                 instance.pk = None
                 instance.text_ng = self
                 instance.save()
+
+    def __str__(self):
+        return self.name or force_text(self.pk)
 
     class Meta:
         verbose_name = _('text')
